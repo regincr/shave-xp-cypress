@@ -47,7 +47,7 @@ describe('login', ()=>{
 
         })
 
-        it('senha incorreta', ()=>{
+        it('senha incorretas', ()=>{
             const user = {
                 name:'Regina',
                 email: 'regincr@gmail.com',

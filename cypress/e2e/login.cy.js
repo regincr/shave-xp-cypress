@@ -24,16 +24,17 @@ describe('login', ()=>{
 
             cy.get('.logged-user div a')
                 .should('be.visible')
-                .should('have.text', 'Olá, Regina')
+                .should('have.text', 'Olá, ' + user.name)
             
             
         })
 
-        it('não deve logar com sucesso', ()=>{
+        it('não deve logar com e-mail incorreto', ()=>{
             const user = {
                 name:'Regina',
-                email: 'regincr@gmail',
-                password: '743105'      
+                email: 'regina@gmail.com',
+                password: '743105'   
+                
             }
             cy.visit('http://localhost:3000')
 
@@ -45,9 +46,16 @@ describe('login', ()=>{
             cy.contains('button', 'Entrar')
                 .click()
 
-        })
+            const message = 'Ocorreu um erro ao fazer login, verifique suas credenciais.'
 
-        it('senha incorretas', ()=>{
+            cy.get('.notice-container')
+            .should('be.visible')
+            .find('.error p')
+            .should('have.text', message )
+            
+        })
+        
+        it('não deve logar com senha incorreta', ()=>{
             const user = {
                 name:'Regina',
                 email: 'regincr@gmail.com',
@@ -63,6 +71,13 @@ describe('login', ()=>{
             //button[text()="Entrar"]
             cy.contains('button', 'Entrar')
                 .click()
+
+            const message = 'Ocorreu um erro ao fazer login, verifique suas credenciais.'
+
+            cy.get('.notice-container')
+            .should('be.visible')
+            .find('.error p')
+            .should('have.text', message )
             
         })
     })
